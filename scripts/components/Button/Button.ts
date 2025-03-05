@@ -42,6 +42,7 @@ export class Button {
                 cursor: pointer;
                 border-radius: 6.25rem;
                 background-color: transparent;
+                transition: all 0.3s ease;
             }
             .btn-content {
                 display: flex;

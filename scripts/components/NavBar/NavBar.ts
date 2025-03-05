@@ -64,6 +64,15 @@ export class NavBar {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                animation: fadeIn 1s ease forwards;
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
             }
             .navbar-logo-container {
                 padding: 0 1.8rem;

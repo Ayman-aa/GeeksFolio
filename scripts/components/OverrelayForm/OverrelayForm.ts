@@ -197,7 +197,7 @@ export class OverlayForm {
                 border-radius: 0.375rem;
                 background-color: transparent;
                 color: white;
-                font-size: 1rem;
+                font-family: 'Poppins', sans-serif;
             }
             
             input:focus, textarea:focus {
@@ -213,18 +213,17 @@ export class OverlayForm {
             }
             
             .submit-button {
-                background-color: #610F4F;
+                background-color: transparent;
                 color: white;
-                border: none;
+                border: 0.125rem solid #610F4F;
                 border-radius: 6.25rem;
                 padding: 0.75rem 2rem;
-                font-size: 1rem;
                 cursor: pointer;
                 transition: all 0.3s ease;
             }
             
             .submit-button:hover {
-                background-color: #8B14B5;
+                background-color: #610F4F;
             }
             
             /* Toast notification styles */
@@ -296,6 +295,7 @@ export class OverlayForm {
     public onSubmit(callback: (data: any) => void): void {
         this.onSubmitCallback = callback;
     }
+
     
     private handleSubmit(): void {
         const formData = new FormData(this.form);
@@ -305,15 +305,52 @@ export class OverlayForm {
             data[key] = value as string;
         });
         
-        if (this.onSubmitCallback) {
-            this.onSubmitCallback(data);
+        // Get submit button for loading state
+        const submitButton = this.form.querySelector('.submit-button') as HTMLButtonElement;
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
         }
         
-        // Show success notification
-        this.showToast("Message sent successfully!", "success");
-        
-        // Close the form after submission
-        this.close();
+        // Send data to your server
+        fetch('http://localhost:3000/api/submit-form', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(responseData => {
+            if (responseData.success) {
+                // Success case
+                this.showToast('Message sent successfully!', 'success');
+                this.form.reset();
+                
+                // Call the callback if it exists
+                if (this.onSubmitCallback) {
+                    this.onSubmitCallback(data);
+                }
+                
+                // Close the form
+                setTimeout(() => this.close(), 1500);
+            } else {
+                // Error from server
+                this.showToast('Error: ' + responseData.message, 'error');
+            }
+        })
+        .catch(error => {
+            // Network or other error
+            console.error('Error:', error);
+            this.showToast('Failed to send message. Please try again.', 'error');
+        })
+        .finally(() => {
+            // Reset button state
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+            }
+        });
     }
     
     private showToast(message: string, type: 'success' | 'error' = 'success'): void {

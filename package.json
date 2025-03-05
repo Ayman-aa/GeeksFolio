@@ -1,14 +1,13 @@
 {
   "name": "geeksfolio",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "build": "npx tsc && node fix-imports.js"
+    "start": "node server.js"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "firebase": "^11.4.0",
-    "firebase-admin": "^13.2.0",
-    "typescript": "^5.8.2"
+    "firebase": "^10.7.1"
   }
 }

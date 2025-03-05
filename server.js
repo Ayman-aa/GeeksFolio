@@ -1,7 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const { collection, addDoc } = require("firebase/firestore");
-const { db } = require("./firebase.js");
+import express from "express";
+import cors from "cors";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "./firebase.js";
 
 const app = express(); // Create express app instance
 

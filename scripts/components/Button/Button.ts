@@ -39,7 +39,6 @@ export class Button {
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
-                margin: 1rem 0;
                 cursor: pointer;
                 border-radius: 6.25rem;
                 background-color: transparent;
@@ -61,7 +60,11 @@ export class Button {
         document.head.appendChild(style);
     }
 
-    render(parent: HTMLElement) {
-        parent.appendChild(this.element);
+    public getElement(): HTMLButtonElement {
+        return this.element;
+    }
+
+    public render(container: HTMLElement): void {
+        container.appendChild(this.element);
     }
 }

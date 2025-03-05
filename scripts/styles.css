@@ -20,6 +20,12 @@ p {
     font-weight: 500;
 }
 
+h3 {
+    font-size: 1.063rem;
+    font-weight: 600;
+    font-variant: small-caps;
+}
+
 button {
     font-family: 'Poppins', sans-serif;
     font-size: 0.875rem;

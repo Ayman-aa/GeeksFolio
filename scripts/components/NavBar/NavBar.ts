@@ -2,6 +2,8 @@ import { getSvgPath } from "../../utils/utils";
 import { Button } from "../Button/Button";
 export class NavBar {
     private element: HTMLElement;
+    private connectButton?: Button;
+    private connectButtonCallback?: () => void;
 
     constructor(links: { text: string, href: string }[]) {
         this.element = document.createElement('nav');
@@ -20,7 +22,6 @@ export class NavBar {
         logoContainer.appendChild(logoImg);
         this.element.appendChild(logoContainer);
 
-
         const ul = document.createElement('ul');
         ul.className = 'navbar-list';
 
@@ -35,11 +36,21 @@ export class NavBar {
             li.appendChild(anchor);
             ul.appendChild(li);
         });
-
+        
         this.element.appendChild(ul);
+        
+        // Add connect button
+        this.connectButton = new Button('Connect', 'arrow');
+        this.connectButton.getElement().addEventListener('click', () => {
+            if (this.connectButtonCallback) {
+                this.connectButtonCallback();
+            }
+        });
+        this.connectButton.render(this.element);
+    }
 
-        const button = new Button('Connect', 'arrow');
-        button.render(this.element);
+    public onConnectButtonClick(callback: () => void): void {
+        this.connectButtonCallback = callback;
     }
 
     private applyStyles() {
@@ -53,6 +64,9 @@ export class NavBar {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+            }
+            .navbar-logo-container {
+                padding: 0 1.8rem;
             }
             .navbar-list {
                 list-style: none;

@@ -3,7 +3,7 @@ import cors from "cors";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "./firebase.js";
 
-const app = express(); // Create express app instance
+const app = express();
 
 app.use(cors());
 app.use(express.json());

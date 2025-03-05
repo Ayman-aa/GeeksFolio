@@ -7,7 +7,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-const port = 3000;
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.status(200).send('API is running');
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 // POST endpoint to handle form submissions
 app.post('/api/submit-form', async (req, res) => {
@@ -37,6 +45,6 @@ app.post('/api/submit-form', async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
 });

@@ -71,4 +71,4 @@ Static assets are deployed to Netlify:
 - Custom #fix-imports.js script to handle ES modules properly
 - CDN distribution for lightning-fast loading
 
-Deployment url: [link](https://aymaniseme.netlify.app)
+Deployment url: [link](https://aymanisme.netlify.app/)

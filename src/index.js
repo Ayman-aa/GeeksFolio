@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { collection, addDoc, getDocs, limit } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, limit } from "firebase/firestore"; // Added query import
 import { db } from "./firebase.js";
 
 const app = express();
@@ -24,7 +24,9 @@ app.use((req, res, next) => {
 // Test Firebase connection at startup
 async function testDbConnection() {
   try {
-    const testQuery = await getDocs(collection(db, 'form-submissions').limit(1));
+    // Fix: Use query() and limit() as separate functions
+    const q = query(collection(db, 'form-submissions'), limit(1));
+    const testQuery = await getDocs(q);
     console.log('Firebase connection successful');
     return true;
   } catch (error) {

@@ -313,7 +313,7 @@ export class OverlayForm {
         }
         
         // Send data to your server
-        fetch('https://www.geeksfolio-production.up.railway.app/api/submit-form', {
+        fetch('https://geeksfolio-production.up.railway.app/api/submit-form', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

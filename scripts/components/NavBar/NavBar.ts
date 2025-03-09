@@ -1,5 +1,6 @@
 import { getSvgPath } from "../../utils/utils";
 import { Button } from "../Button/Button";
+import { Router } from "../Router/Router";
 export class NavBar {
     private element: HTMLElement;
     private connectButton?: Button;
@@ -53,6 +54,31 @@ export class NavBar {
         this.connectButtonCallback = callback;
     }
 
+    /**
+     * Setup router integration for navigation links
+     */
+    public setupRouterLinks(router: Router): void {
+        // Find all links in the navbar
+        const links = this.element.querySelectorAll('.navbar-item a');
+        
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href') || '/';
+                router.navigate(href);
+            });
+        });
+        
+        // Setup the logo to navigate to home
+        const logoLink = this.element.querySelector('.navbar-logo-container');
+        if (logoLink) {
+            logoLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                router.navigate('/');
+            });
+        }
+    }
+
     private applyStyles() {
         const style = document.createElement('style');
         style.textContent = `
@@ -95,12 +121,19 @@ export class NavBar {
             .navbar a {
                 color: white;
                 text-decoration: none;
+                transition: all 0.3s ease-in-out;
             }
+            .navbar a:hover {
+                color:rgb(120, 20, 98);
+            }      
         `;
         document.head.appendChild(style);
     }
 
     render(parent: HTMLElement) {
         parent.appendChild(this.element);
+    }    
+    public getElement(): HTMLElement {
+        return this.element;
     }
 }
